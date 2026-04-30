@@ -25,6 +25,10 @@
 @import "@ionic/angular/css/text-transformation.css";
 @import "@ionic/angular/css/flex-utils.css";
 
+
+@import 'node_modules/@swimlane/ngx-datatable/assets/icons.css';
+@import 'node_modules/@swimlane/ngx-datatable/index.css';
+@import 'node_modules/@swimlane/ngx-datatable/themes/material.scss';
 /**
  * Ionic Dark Mode
  * -----------------------------------------------------
@@ -34,4 +38,22 @@
 
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
-@import '@ionic/angular/css/palettes/dark.system.css';
+// @import '@ionic/angular/css/palettes/dark.system.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/**
+ * ion-content scroll host lives in shadow DOM; utilities on inner nodes
+ * cannot stretch it. One class + ::part(scroll) bridges Tailwind + Ionic.
+ */
+@layer components {
+  .ion-content-center {
+    --overflow: hidden;
+  }
+
+  .ion-content-center::part(scroll) {
+    @apply flex min-h-full flex-col items-center justify-center;
+  }
+}

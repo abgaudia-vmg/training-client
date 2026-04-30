@@ -1,0 +1,58 @@
+<!-- <ion-header>
+    <ion-toolbar>
+        <ion-title size="large">Login</ion-title>
+    </ion-toolbar>
+</ion-header> -->
+
+<ion-content [fullscreen]="true" class="ion-content-center">
+    <div class="w-full max-w-md p-4">
+        <form
+            [formGroup]="loginForm"
+            (ngSubmit)="loginUser()"
+            class="w-full flex flex-col gap-4">
+            <!-- for learning purposes: [routerLink]'['route', 'param']' >> equivalent to href='/route/param -> route: 'login', param: 'email' -->
+            <h1>User Login</h1>
+            <ion-input
+                formControlName="username"
+                label="Username"
+                labelPlacement="floating"
+                type="text"
+                fill="outline"
+                placeholder="Enter your username">
+            </ion-input>
+            <div class="w-full flex items-start justify-center flex-col ">
+                <ion-input
+                    formControlName="password"
+                    label="Password"
+                    labelPlacement="floating"
+                    type="password"
+                    fill="outline"
+                    placeholder="Enter your password">
+                    <ion-input-password-toggle *ngIf="loginForm.get('password')?.value.length > 0"
+                        slot="end"></ion-input-password-toggle>
+                </ion-input>
+                <div class="ion-margin-top">
+                    <a [routerLink]="['/auth/reset-password']">Reset Password</a>
+                </div>
+            </div>
+            <ion-button type="submit" [disabled]="loginForm.invalid || isLoading" class="self-center max-w-[160px]">
+
+                <ion-icon name="refresh-sharp" slot="start" class="animate-spin" *ngIf="isLoading"></ion-icon>
+                <ion-icon name="log-in-sharp" slot="start" *ngIf="!isLoading"></ion-icon>
+                Log In
+            </ion-button>
+            <ion-button *ngIf="showDevButtons" (click)="validateSession()" class="self-center  ">
+                (DEV) Validate Session
+            </ion-button>
+            <ion-button *ngIf="showDevButtons" (click)="prefillStaffLogin()" class="self-center  ">
+                (DEV) Prefill Staff Login
+            </ion-button>
+            <ion-button *ngIf="showDevButtons" (click)="prefillAdminLogin()" class="self-center  ">
+                (DEV) Prefill Admin Login
+            </ion-button>
+            <div class="ion-margin-top self-center">
+                Not a member? <a routerLink="/auth/register">Register</a>
+            </div>
+        </form>
+    </div>
+</ion-content>

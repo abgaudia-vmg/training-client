@@ -1,0 +1,76 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-title>Todos | My Todos</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+    <div class="mx-auto flex w-full min-w-0 max-w-7xl flex-col gap-4 pb-4">
+
+        <div class="flex flex-col gap-4 min-w-0">
+            <div class="flex min-w-0 flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-center">
+                <ion-select
+                    label="Status"
+                    class="w-full min-w-0 sm:w-max sm:shrink-0"
+                    [value]="searchStatus"
+                    fill="outline"
+                    (ionChange)="onStatusChange($event)">
+                    <ion-select-option value="all">All</ion-select-option>
+                    <ion-select-option *ngFor="let s of statusValues" [value]="s">
+                        {{ s | titlecase }}
+                    </ion-select-option>
+                </ion-select>
+
+                <ion-input
+                    class="min-w-0 flex-1 sm:min-w-[12rem]"
+                    fill="outline"
+                    type="text"
+                    placeholder="Search"
+                    (ionInput)="onSearchChange($event)"
+                    [value]="searchQueryString">
+                </ion-input>
+
+                <div class="flex shrink-0 items-center justify-start gap-2 sm:justify-center">
+                    <ion-button (click)="loadTodos()" *ngIf="!searchQueryString" class="size-[56px]">
+                        <ion-icon name="refresh-sharp" [class.animate-spin]="isLoading"></ion-icon>
+                    </ion-button>
+                    <ion-button (click)="clearSearch()" *ngIf="searchQueryString">
+                        <ion-icon name="close-circle-sharp"></ion-icon>
+                    </ion-button>
+                </div>
+            </div>
+
+            <div class="w-full min-w-0 overflow-x-auto">
+                <ngx-datatable
+                    class="material"
+                    columnMode="force"
+                    [rows]="todos"
+                    [headerHeight]="50"
+                    [footerHeight]="50"
+                    rowHeight="auto"
+                    [limit]="10">
+                    <ngx-datatable-column name="Title" prop="title" [minWidth]="150"></ngx-datatable-column>
+                    <ngx-datatable-column name="Description" [minWidth]="200">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                            <span class="line-clamp-2">{{ row?.description ?? '' }}</span>
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Status" prop="status" [minWidth]="120">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{ (row?.status ?? '') | titlecase }}
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Deadline" [minWidth]="130">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{ (row?.deadline | date: 'mediumDate') ?? '' }}
+                        </ng-template>
+                    </ngx-datatable-column>
+                </ngx-datatable>
+            </div>
+        </div>
+
+    </div>
+</ion-content>

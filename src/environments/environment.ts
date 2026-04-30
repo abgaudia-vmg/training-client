@@ -3,7 +3,11 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+    production: false,
+    env: 'local',
+    show_dev_buttons: true,
+    // api_url: 'http://localhost:3000'
+    api_url: 'http://localhost:4300' //docker: localhost:8100, local: localhost:4300
 };
 
 /*

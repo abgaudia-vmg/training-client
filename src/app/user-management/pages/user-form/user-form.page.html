@@ -1,0 +1,117 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+            <ion-button (click)="goBack()">
+                <ion-icon name="arrow-back-sharp" slot="icon-only"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+        <ion-title>{{ isEditMode ? 'Edit User' : 'Add User' }}</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-content-center ion-padding">
+    <div class="w-full max-w-lg p-4 overflow-y-auto">
+        <form
+            [formGroup]="userForm"
+            (ngSubmit)="submitForm()"
+            class="w-full flex flex-col gap-4">
+
+            <div class="flex flex-col gap-4 sm:flex-row">
+                <ion-input
+                    formControlName="first_name"
+                    label="First Name"
+                    labelPlacement="floating"
+                    type="text"
+                    fill="outline"
+                    placeholder="Enter first name"
+                    class="flex-1">
+                </ion-input>
+                <ion-input
+                    formControlName="last_name"
+                    label="Last Name"
+                    labelPlacement="floating"
+                    type="text"
+                    fill="outline"
+                    placeholder="Enter last name"
+                    class="flex-1">
+                </ion-input>
+            </div>
+
+            <ion-input
+                formControlName="username"
+                label="Username"
+                labelPlacement="floating"
+                type="text"
+                fill="outline"
+                placeholder="Enter username">
+            </ion-input>
+
+            <ion-input
+                label="Email (auto-generated)"
+                labelPlacement="floating"
+                type="email"
+                fill="outline"
+                [value]="generatedEmail"
+                [readonly]="true"
+                placeholder="Fill in first & last name to generate">
+            </ion-input>
+
+            <div class="flex flex-col gap-2 justify-center">
+                <ion-input
+                    formControlName="password"
+                    label="{{ isEditMode ? 'New Password (leave blank to keep current)' : 'Password' }}"
+                    labelPlacement="floating"
+                    type="password"
+                    fill="outline"
+                    placeholder="{{ isEditMode ? 'Leave blank to keep current' : 'Enter password' }}">
+                    @if ((userForm.get('password')?.value?.length ?? 0) > 0) {
+                    <ion-input-password-toggle slot="end"></ion-input-password-toggle>
+                    }
+                </ion-input>
+
+                <div class="flex flex-col gap-2 pl-2">
+                    <ion-text color="danger"
+                        *ngIf="userForm.get('password')?.touched && userForm.get('password')?.errors?.['pattern']">
+                        Your password must meet the following requirements:
+                    </ion-text>
+                    @if (userForm.get('password')?.touched && userForm.get('password')?.errors?.['pattern']) {
+                    <ul class="list-disc list-inside pl-2 m-0 border border-red-500 rounded-md"
+                        style="border-color: red;">
+                        <li *ngFor="let item of passwordRequirementsMessageList">
+                            <ion-text color="danger">{{ item }}</ion-text>
+                        </li>
+                    </ul>
+                    }
+                </div>
+            </div>
+
+            <ion-select
+                formControlName="user_type"
+                label="User Type"
+                labelPlacement="floating"
+                fill="outline"
+                interface="popover">
+                <ion-select-option value="staff">Staff</ion-select-option>
+                <ion-select-option value="admin">Admin</ion-select-option>
+            </ion-select>
+
+            <div class="flex gap-4 justify-end ion-margin-top">
+                <ion-button
+                    fill="outline"
+                    (click)="goBack()"
+                    [disabled]="isLoading">
+                    Cancel
+                </ion-button>
+                <ion-button
+                    type="submit"
+                    [disabled]="userForm.invalid || isLoading || !generatedEmail">
+                    <ion-icon name="refresh-sharp" slot="start" class="animate-spin" *ngIf="isLoading"></ion-icon>
+                    <ion-icon name="save-sharp" slot="start" *ngIf="!isLoading"></ion-icon>
+                    {{ isEditMode ? 'Update User' : 'Add User' }}
+                </ion-button>
+            </div>
+
+        </form>
+    </div>
+</ion-content>

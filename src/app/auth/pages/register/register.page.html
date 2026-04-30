@@ -1,0 +1,104 @@
+<ion-content [fullscreen]="true" class="ion-content-center">
+    <div class="w-full max-w-md p-4">
+        <form
+            [formGroup]="registerForm"
+            (ngSubmit)="registerUser()"
+            class="w-full flex flex-col gap-4">
+            <!-- Learning Purposes: [routerLink]'['route', 'param']' >> equivalent to href='/route/param -> route: 'login', param: 'email' -->
+
+            <h1>Register: Staff</h1>
+            <ion-input
+                formControlName="username"
+                label="Username"
+                labelPlacement="floating"
+                type="text"
+                fill="outline"
+                placeholder="Enter your username"></ion-input>
+
+            <ion-input
+                formControlName="first_name"
+                label="First Name"
+                labelPlacement="floating"
+                type="text"
+                fill="outline"
+                placeholder="Enter your First Name"></ion-input>
+            <ion-input
+                formControlName="last_name"
+                label="Last Name"
+                labelPlacement="floating"
+                type="text"
+                fill="outline"
+                placeholder="Enter your Last Name"></ion-input>
+            <div class="flex flex-col gap-2 justify-center">
+                <ion-input
+                    formControlName="email"
+                    label="Email - Auto-Generated"
+                    labelPlacement="floating"
+                    type="text"
+                    fill="outline"
+                    placeholder="Enter your Email"
+                    readonly
+                    [disabled]="true"
+                    placeholder="Your email will be auto-generated"></ion-input>
+                <ion-text color="primary" class="pl-2">* Your email will be auto-generated based on your first and last
+                    name</ion-text>
+            </div>
+            <div class="flex flex-col gap-2 justify-center">
+                <ion-input
+                    formControlName="password"
+                    label="Password"
+                    labelPlacement="floating"
+                    type="password"
+                    fill="outline"
+                    placeholder="Enter your Password">
+                    @if(registerForm.get('password')?.value.length > 0) {
+                    <ion-input-password-toggle slot="end"></ion-input-password-toggle>
+                    }
+                </ion-input>
+
+                <div class="flex flex-col gap-2 pl-2">
+                    <ion-text color="danger"
+                        *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.errors?.['pattern']">Your
+                        password must meet the following requirements:</ion-text>
+
+                    <ul class="list-disc list-inside pl-2 m-0 border border-red-500 rounded-md"
+                        style="border-color: red;"
+                        *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.errors?.['pattern']">
+                        <li *ngFor="let item of passwordRequirementsMessageList">
+                            <ion-text color="danger">{{ item }}</ion-text>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="flex flex-col gap-1">
+                <ion-input
+                    formControlName="confirm_password"
+                    label="Confirm Password"
+                    labelPlacement="floating"
+                    type="password"
+                    fill="outline"
+                    placeholder="Enter your Confirm Password">
+                    @if ((registerForm.get('confirm_password')?.value?.length ?? 0) > 0) {
+                    <ion-input-password-toggle slot="end"></ion-input-password-toggle>
+                    }
+                </ion-input>
+
+                <ion-text color="danger" class="pl-2"
+                    *ngIf="showConfirmPasswordMismatchError()">{{ errMsgConfirmPassword }}</ion-text>
+            </div>
+
+            <ion-button type="submit" [disabled]="registerForm.invalid || isLoading" class="self-center max-w-[160px]">
+                @if(isLoading) {
+                <ion-icon name="refresh-sharp" slot="start" class="animate-spin"></ion-icon>
+                } @else {
+                <ion-icon name="person-add-sharp" slot="start"></ion-icon>
+                }
+                Register
+            </ion-button>
+            <div class="ion-margin-top self-center">
+                Already a member? <a routerLink="/auth/login">Login</a>
+            </div>
+        </form>
+    </div>
+</ion-content>
