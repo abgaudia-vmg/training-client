@@ -4,10 +4,10 @@
 
     <div class="flex flex-row items-center justify-center gap-4">
         <ion-toggle
+            #darkModeToggle
             slot="end"
             aria-label="Dark mode"
-            (ionChange)="onDarkModeToggle($event)"
-            [checked]="this.ThemeService.isDarkPalette()"></ion-toggle>
+            [formControl]="darkModeControl"></ion-toggle>
         <ion-icon
             [name]="this.ThemeService.isDarkPalette() ? 'moon' : 'sunny'"
             [class.text-blue-500]="this.ThemeService.isDarkPalette()"

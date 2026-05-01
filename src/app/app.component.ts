@@ -18,7 +18,7 @@ import { AppSoftButtonComponent } from "./common/components/soft-button/soft-but
     selector: 'app-root',
     styleUrls: ['app.component.scss'],
     templateUrl: 'app.component.html',
-    imports: [CommonModule, AppSoftButtonComponent, IonicModule, AppModule, RouterLink, RouterLinkActive, DarkModeToggleComponent],
+    imports: [CommonModule, IonicModule, AppModule, RouterLink, RouterLinkActive, DarkModeToggleComponent],
     standalone: true,
 })
 export class AppComponent {

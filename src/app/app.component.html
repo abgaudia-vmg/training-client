@@ -4,38 +4,32 @@
             <ion-content>
 
 
-                <div
-                    class="menu-header ion-padding">
+                <div class="menu-header ion-padding">
 
-                    <div class="flex flex-row items-center justify-center gap-2">
+                    <div class="flex flex-row items-center gap-3">
 
-                        <div class="flex flex-row items-center justify-center size-[40px] rounded-[30%] box-border p-2"
+                        <div class="flex items-center justify-center size-[44px] rounded-xl shrink-0"
                             style="background-color: var(--app-ion-btn-primary-fg);">
-                            <span
-                                class="ion-margin-bottom text-sm opacity-80 p-0 m-0 text-lg"
-                                style="color: var(--app-ion-btn-primary-bg);">
-                                {{ firstLetterFirstName()?.toUpperCase?.()}}
+                            <span class="text-base font-semibold leading-none ion-text-uppercase"
+                                style="color: var(--app-ion-btn-primary-bg)">
+                                {{ firstLetterFirstName()}}
                             </span>
-
                         </div>
-                        <ion-text class="text-lg">
-                            {{sessionService.user()?.first_name}} {{sessionService.user()?.last_name}}
-                        </ion-text>
-                        <!-- <span class="font-bold text-[20px]">Menu</span> -->
 
-                    </div>
-                    <div class="flex flex-col gap-1">
-
-                        <div class="flex flex-col text-lg">
-
-                            <ion-text>
+                        <div class="flex flex-col gap-0.5 min-w-0">
+                            <ion-text class="text-sm font-semibold truncate">
+                                {{sessionService.normalizedFullName()}}
+                            </ion-text>
+                            <ion-text class="text-xs opacity-60 truncate">
                                 {{sessionService.user()?.email}}
                             </ion-text>
-                            <ion-text class="text-sm">
-                                {{normalizedRole()}}
-                            </ion-text>
+                            <span class="text-[10px] font-medium tracking-wide uppercase opacity-40 mt-0.5">
+                                {{this.sessionService.user()?.role}}
+                            </span>
                         </div>
+
                     </div>
+
                 </div>
 
                 <div class="ion-padding">

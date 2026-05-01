@@ -6,11 +6,9 @@ ion-menu {
 }
 
 .menu-header {
-    gap: 4px;
     border-bottom: 1px solid $menu-border-color-light;
     display: flex;
     flex-direction: column;
-    align-items: start;
     justify-content: center;
 }
 

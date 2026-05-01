@@ -1,17 +1,24 @@
-import { Injectable, signal } from "@angular/core";
+import { Injectable, OnDestroy, signal } from "@angular/core";
 
 
 export const THEME_STORAGE_KEY = 'training-app-theme-preference';
-
+export const THEME_BROADCAST_CHANNEL_NAME = 'theme-sync';
+export const THEME_BROADCAST_CHANNEL_TYPE = 'theme-change';
 export type TTheme = "light" | "dark";
 
 @Injectable({ providedIn: 'root' })
-export class ThemeService {
+export class ThemeService implements OnDestroy {
 
     public readonly isDarkPalette = signal(false);
+    private readonly themeChannel = new BroadcastChannel(THEME_BROADCAST_CHANNEL_NAME);
 
     constructor() {
         this.initializeThemeFromStorage();
+        this.listenForExternalChanges();
+    }
+
+    ngOnDestroy(): void {
+        this.themeChannel.close();
     }
 
     get appPreferredTheme() {
@@ -28,17 +35,36 @@ export class ThemeService {
         this.isDarkPalette.set(dark);
     }
 
-    public setTheme(theme: TTheme) {
+    public setTheme(theme: TTheme, broadcast: boolean = true) {
         localStorage.setItem(THEME_STORAGE_KEY, theme);
         this.isDarkPalette.set(theme === 'dark');
         this.applyDarkPalette(theme === 'dark');
+        if (broadcast) {
+            console.log('broadcasting theme change', theme);
+            this.themeChannel.postMessage({
+                type: THEME_BROADCAST_CHANNEL_TYPE,
+                theme
+            })
+        }
+    }
+
+    private listenForExternalChanges(): void {
+        this.themeChannel.onmessage = (event: MessageEvent<{ type: string, theme: TTheme }>) => {
+            if (event.data?.type === THEME_BROADCAST_CHANNEL_TYPE) {
+                this.setTheme(event.data.theme, false);
+            }
+        }
     }
 
     public initializeThemeFromStorage() {
         const theme = this.getTheme;
         const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
         if (!theme) return this.applyDarkPalette(prefersDark);
+
         this.isDarkPalette.set(theme === 'dark');
         return this.applyDarkPalette(theme === 'dark');
     }
+
+
 }
