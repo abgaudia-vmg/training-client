@@ -1,2 +1,108 @@
-// For information on how to create your own theme, please refer to:
-// https://ionicframework.com/docs/theming/
+// For Ionic theming basics, see https://ionicframework.com/docs/theming/
+// Soft palette tokens for solid `ion-button` (imported from `global.scss`).
+
+:root {
+    --menu-border-color-light: rgb(221, 221, 221);
+    --menu-border-color-dark: rgb(94, 94, 94);
+
+    /* primary */
+    --app-ion-btn-primary-bg: #dbeafe;
+    --app-ion-btn-primary-bg-hover: #bfdbfe;
+    --app-ion-btn-primary-bg-active: #93c5fd;
+    --app-ion-btn-primary-fg: #1e40af;
+
+    /* secondary */
+    --app-ion-btn-secondary-bg: #e0e7ff;
+    --app-ion-btn-secondary-bg-hover: #c7d2fe;
+    --app-ion-btn-secondary-bg-active: #a5b4fc;
+    --app-ion-btn-secondary-fg: #3730a3;
+
+    /* tertiary */
+    --app-ion-btn-tertiary-bg: #ede9fe;
+    --app-ion-btn-tertiary-bg-hover: #ddd6fe;
+    --app-ion-btn-tertiary-bg-active: #c4b5fd;
+    --app-ion-btn-tertiary-fg: #5b21b6;
+
+    /* success */
+    --app-ion-btn-success-bg: #d1fae5;
+    --app-ion-btn-success-bg-hover: #a7f3d0;
+    --app-ion-btn-success-bg-active: #6ee7b7;
+    --app-ion-btn-success-fg: #047857;
+
+    /* warning */
+    --app-ion-btn-warning-bg: #fef3c7;
+    --app-ion-btn-warning-bg-hover: #fde68a;
+    --app-ion-btn-warning-bg-active: #fcd34d;
+    --app-ion-btn-warning-fg: #b45309;
+
+    /* danger */
+    --app-ion-btn-danger-bg: #fee2e2;
+    --app-ion-btn-danger-bg-hover: #fecaca;
+    --app-ion-btn-danger-bg-active: #fca5a5;
+    --app-ion-btn-danger-fg: #b91c1c;
+
+    /* medium */
+    --app-ion-btn-medium-bg: #f3f4f6;
+    --app-ion-btn-medium-bg-hover: #e5e7eb;
+    --app-ion-btn-medium-bg-active: #d1d5db;
+    --app-ion-btn-medium-fg: #4b5563;
+
+    /* light */
+    --app-ion-btn-light-bg: #fafafa;
+    --app-ion-btn-light-bg-hover: #f5f5f5;
+    --app-ion-btn-light-bg-active: #e5e5e5;
+    --app-ion-btn-light-fg: #525252;
+
+    /* dark */
+    --app-ion-btn-dark-bg: #e5e7eb;
+    --app-ion-btn-dark-bg-hover: #d1d5db;
+    --app-ion-btn-dark-bg-active: #9ca3af;
+    --app-ion-btn-dark-fg: #111827;
+}
+
+html.ion-palette-dark {
+    --app-ion-btn-primary-bg: #1e3a5f;
+    --app-ion-btn-primary-bg-hover: #1e4976;
+    --app-ion-btn-primary-bg-active: #2563eb;
+    --app-ion-btn-primary-fg: #bfdbfe;
+
+    --app-ion-btn-secondary-bg: #312e81;
+    --app-ion-btn-secondary-bg-hover: #3730a3;
+    --app-ion-btn-secondary-bg-active: #4338ca;
+    --app-ion-btn-secondary-fg: #c7d2fe;
+
+    --app-ion-btn-tertiary-bg: #4c1d95;
+    --app-ion-btn-tertiary-bg-hover: #5b21b6;
+    --app-ion-btn-tertiary-bg-active: #6d28d9;
+    --app-ion-btn-tertiary-fg: #ddd6fe;
+
+    --app-ion-btn-success-bg: #064e3b;
+    --app-ion-btn-success-bg-hover: #047857;
+    --app-ion-btn-success-bg-active: #059669;
+    --app-ion-btn-success-fg: #a7f3d0;
+
+    --app-ion-btn-warning-bg: #78350f;
+    --app-ion-btn-warning-bg-hover: #92400e;
+    --app-ion-btn-warning-bg-active: #b45309;
+    --app-ion-btn-warning-fg: #fde68a;
+
+    --app-ion-btn-danger-bg: #5c2222;
+    --app-ion-btn-danger-bg-hover: #6d2e2e;
+    --app-ion-btn-danger-bg-active: #7f1d1d;
+    --app-ion-btn-danger-fg: #fecaca;
+
+    --app-ion-btn-medium-bg: #374151;
+    --app-ion-btn-medium-bg-hover: #4b5563;
+    --app-ion-btn-medium-bg-active: #6b7280;
+    --app-ion-btn-medium-fg: #e5e7eb;
+
+    --app-ion-btn-light-bg: #404040;
+    --app-ion-btn-light-bg-hover: #525252;
+    --app-ion-btn-light-bg-active: #737373;
+    --app-ion-btn-light-fg: #fafafa;
+
+    --app-ion-btn-dark-bg: #171717;
+    --app-ion-btn-dark-bg-hover: #262626;
+    --app-ion-btn-dark-bg-active: #404040;
+    --app-ion-btn-dark-fg: #f3f4f6;
+}

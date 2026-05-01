@@ -10,13 +10,14 @@ import { finalize } from "rxjs";
 import { CommonService } from "src/app/common/services/common.service";
 import { environment } from "src/environments/environment.js";
 import { SessionService } from "../../../common/services/session.service.js";
+import { AppSoftButtonComponent } from "src/app/common/components/soft-button/soft-button.component";
 
 
 @Component({
     selector: 'app-login',
     templateUrl: './login.page.html',
     standalone: true,
-    imports: [AppModule, IonicModule, ReactiveFormsModule]
+    imports: [AppModule, IonicModule, ReactiveFormsModule, AppSoftButtonComponent]
 })
 
 export class LoginPage {

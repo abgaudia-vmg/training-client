@@ -1,57 +1,99 @@
 <ion-app>
     <ion-split-pane contentId="main-content">
-        <ion-menu contentId="main-content" type="overlay" *ngIf="sessionService.user()">
-            <ion-header>
-                <ion-toolbar>
-                    <ion-title>Menu</ion-title>
-                </ion-toolbar>
-            </ion-header>
-            <ion-content class="ion-padding">
-                <p class="ion-margin-bottom text-sm opacity-80">
-                    {{ sessionService.user()!.email }}
-                </p>
-                <ion-list lines="none">
-                    <ion-menu-toggle auto-hide="false" *ngIf="sessionService.user()?.role === 'admin'">
-                        <ion-item button routerLink="/user-management/view-all" routerLinkActive="selected"
-                            detail="false">
-                            <ion-label>User Management</ion-label>
-                        </ion-item>
-                    </ion-menu-toggle>
+        <ion-menu contentId="main-content" type="overlay" *ngIf="showAppMenu()">
+            <ion-content>
 
-                    <ion-accordion-group>
-                        <ion-accordion value="todo-management">
-                            <ion-item slot="header" detail="false" lines="none">
-                                <ion-label>Todo Management</ion-label>
+
+                <div
+                    class="menu-header ion-padding">
+
+                    <div class="flex flex-row items-center justify-center gap-2">
+
+                        <div class="flex flex-row items-center justify-center size-[40px] rounded-[30%] box-border p-2"
+                            style="background-color: var(--app-ion-btn-primary-fg);">
+                            <span
+                                class="ion-margin-bottom text-sm opacity-80 p-0 m-0 text-lg"
+                                style="color: var(--app-ion-btn-primary-bg);">
+                                {{ firstLetterFirstName()?.toUpperCase?.()}}
+                            </span>
+
+                        </div>
+                        <ion-text class="text-lg">
+                            {{sessionService.user()?.first_name}} {{sessionService.user()?.last_name}}
+                        </ion-text>
+                        <!-- <span class="font-bold text-[20px]">Menu</span> -->
+
+                    </div>
+                    <div class="flex flex-col gap-1">
+
+                        <div class="flex flex-col text-lg">
+
+                            <ion-text>
+                                {{sessionService.user()?.email}}
+                            </ion-text>
+                            <ion-text class="text-sm">
+                                {{normalizedRole()}}
+                            </ion-text>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ion-padding">
+
+
+                    <ion-list lines="none" class="ion-padding">
+                        <ion-menu-toggle auto-hide="false" *ngIf="sessionService.user()?.role === 'admin'">
+                            <ion-item button routerLink="/user-management/view-all" routerLinkActive="selected"
+                                detail="false">
+                                <ion-icon name="people-outline" slot="start"></ion-icon>
+                                <ion-label>User Management</ion-label>
                             </ion-item>
-                            <ion-list slot="content" lines="none" class="ion-no-padding">
-                                <ion-menu-toggle auto-hide="false" *ngIf="sessionService.user()?.role === 'admin'">
-                                    <ion-item
-                                        button
-                                        routerLink="/todos/all-users"
-                                        routerLinkActive="selected"
-                                        detail="false"
-                                        class="ion-padding-start">
-                                        <ion-label>All Users</ion-label>
-                                    </ion-item>
-                                </ion-menu-toggle>
-                                <ion-menu-toggle auto-hide="false">
-                                    <ion-item
-                                        button
-                                        routerLink="/todos/my-todos"
-                                        routerLinkActive="selected"
-                                        detail="false"
-                                        class="ion-padding-start">
-                                        <ion-label>My Todos</ion-label>
-                                    </ion-item>
-                                </ion-menu-toggle>
-                            </ion-list>
-                        </ion-accordion>
-                    </ion-accordion-group>
-                </ion-list>
+                        </ion-menu-toggle>
+
+                        <ion-accordion-group>
+                            <ion-accordion value="todo-management">
+                                <ion-item slot="header" detail="false" lines="none">
+                                    <ion-icon name="list-outline" slot="start"></ion-icon>
+                                    <ion-label>Todo Management</ion-label>
+                                </ion-item>
+                                <ion-list slot="content" lines="none" class="ion-no-padding">
+                                    <ion-menu-toggle auto-hide="false" *ngIf="sessionService.user()?.role === 'admin'">
+                                        <ion-item
+                                            button
+                                            routerLink="/todos/all-users"
+                                            routerLinkActive="selected"
+                                            detail="false"
+                                            class="ion-padding-start">
+                                            <ion-label>All Users</ion-label>
+                                        </ion-item>
+                                    </ion-menu-toggle>
+                                    <ion-menu-toggle auto-hide="false">
+                                        <ion-item
+                                            button
+                                            routerLink="/todos/my-todos"
+                                            routerLinkActive="selected"
+                                            detail="false"
+                                            class="ion-padding-start">
+                                            <ion-label>My Todos</ion-label>
+                                        </ion-item>
+                                    </ion-menu-toggle>
+                                </ion-list>
+                            </ion-accordion>
+                        </ion-accordion-group>
+                    </ion-list>
+                </div>
+
             </ion-content>
 
-            <ion-footer>
-                <ion-button expand="full" (click)="logout()">Logout</ion-button>
+
+
+            <ion-footer class="ion-padding flex flex-col gap-4 menu-footer">
+                <app-dark-mode-toggle></app-dark-mode-toggle>
+                <!-- <ion-button elevation="0" expand="full" class="app-menu-logout" (click)="logout()">Logout</ion-button> -->
+                <ion-button color="danger" (click)="logout()">
+                    <ion-icon name="log-out-outline" slot="start"></ion-icon>
+                    Logout
+                </ion-button>
             </ion-footer>
         </ion-menu>
         <ion-router-outlet id="main-content"></ion-router-outlet>

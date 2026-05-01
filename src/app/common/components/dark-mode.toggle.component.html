@@ -1,0 +1,19 @@
+<div class="w-full flex flex-row items-center justify-between gap-4"
+    style="border-radius: px;">
+    <ion-text class="text-[#707784]">{{this.ThemeService.isDarkPalette() ? 'Dark' : 'Light'}} Mode</ion-text>
+
+    <div class="flex flex-row items-center justify-center gap-4">
+        <ion-toggle
+            slot="end"
+            aria-label="Dark mode"
+            (ionChange)="onDarkModeToggle($event)"
+            [checked]="this.ThemeService.isDarkPalette()"></ion-toggle>
+        <ion-icon
+            [name]="this.ThemeService.isDarkPalette() ? 'moon' : 'sunny'"
+            [class.text-blue-500]="this.ThemeService.isDarkPalette()"
+            [class.text-yellow-500]="!this.ThemeService.isDarkPalette()"
+            [class.text-[28px]]="this.ThemeService.isDarkPalette()"
+            [class.text-[32px]]="!this.ThemeService.isDarkPalette()"
+            aria-hidden="true"></ion-icon>
+    </div>
+</div>

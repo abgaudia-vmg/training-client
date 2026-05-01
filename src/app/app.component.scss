@@ -1,0 +1,32 @@
+$menu-border-color-light: rgb(221, 221, 221);
+$menu-border-color-dark: rgb(94, 94, 94);
+
+ion-menu {
+    border-right: 1px solid var(--menu-border-color-light);
+}
+
+.menu-header {
+    gap: 4px;
+    border-bottom: 1px solid $menu-border-color-light;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: center;
+}
+
+.menu-footer {
+    box-shadow: none;
+    border-top: 1px solid $menu-border-color-light;
+}
+
+:host-context(html.ion-palette-dark) ion-menu {
+    border-right: 1px solid rgb(94, 94, 94);
+}
+
+:host-context(html.ion-palette-dark) .menu-footer {
+    border-top: 1px solid $menu-border-color-dark;
+}
+
+:host-context(html.ion-palette-dark) .menu-header {
+    border-bottom: 1px solid $menu-border-color-dark;
+}
