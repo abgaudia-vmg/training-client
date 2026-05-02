@@ -13,6 +13,22 @@ export type TodoStatus = 'pending' | 'in progress' | 'completed' | 'cancelled' |
 
 export const TODO_STATUS_VALUES: TodoStatus[] = ['pending', 'in progress', 'completed', 'cancelled', 'deleted'];
 
+export const TODO_STATUS_ICON: Record<TodoStatus, string> = {
+    'pending':     'time-sharp',
+    'in progress': 'sync-sharp',
+    'completed':   'checkmark-circle-sharp',
+    'cancelled':   'close-circle-sharp',
+    'deleted':     'trash-sharp',
+};
+
+export const TODO_STATUS_COLOR: Record<TodoStatus, string> = {
+    'pending':     'text-yellow-500',
+    'in progress': 'text-blue-500',
+    'completed':   'text-green-500',
+    'cancelled':   'text-gray-400',
+    'deleted':     'text-red-500',
+};
+
 export interface ITodo {
     _id: any;
     title: string;

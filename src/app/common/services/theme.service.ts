@@ -40,7 +40,6 @@ export class ThemeService implements OnDestroy {
         this.isDarkPalette.set(theme === 'dark');
         this.applyDarkPalette(theme === 'dark');
         if (broadcast) {
-            console.log('broadcasting theme change', theme);
             this.themeChannel.postMessage({
                 type: THEME_BROADCAST_CHANNEL_TYPE,
                 theme
@@ -59,11 +58,8 @@ export class ThemeService implements OnDestroy {
     public initializeThemeFromStorage() {
         const theme = this.getTheme;
         const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-        if (!theme) return this.applyDarkPalette(prefersDark);
-
-        this.isDarkPalette.set(theme === 'dark');
-        return this.applyDarkPalette(theme === 'dark');
+        const themeToSet = theme ?? (prefersDark ? 'dark' : 'light');
+        this.setTheme(themeToSet as TTheme);
     }
 
 

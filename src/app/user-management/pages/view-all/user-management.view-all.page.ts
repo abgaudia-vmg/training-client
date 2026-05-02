@@ -8,6 +8,7 @@ import { NgxDatatableModule } from "@swimlane/ngx-datatable";
 import { IUser } from "src/app/types/api.types";
 import { addIcons } from "ionicons";
 import { checkmarkCircleSharp, closeCircleSharp, refreshSharp, personAddSharp, createSharp, trashSharp } from "ionicons/icons";
+import { ThemeService } from "src/app/common/services/theme.service";
 @Component({
     selector: 'app-user-management-view-all',
     templateUrl: './user-management.view-all.page.html',
@@ -30,7 +31,8 @@ export class UserManagementViewAllPage implements ViewWillEnter {
         private FormBuilder: FormBuilder,
         private UserGatewayService: userGatewayService,
         private CommonService: CommonService,
-        private AlertController: AlertController
+        private AlertController: AlertController,
+        public ThemeService: ThemeService,
     ) {
         this.users = [];
         this.userManagementForm = this.FormBuilder.group({

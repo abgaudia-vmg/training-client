@@ -24,6 +24,19 @@
                     </ion-select-option>
                 </ion-select>
 
+                <ion-select
+                    label="Assigned To"
+                    class="w-full min-w-0 sm:w-max sm:shrink-0"
+                    [value]="searchAssignedTo"
+                    fill="outline"
+                    [disabled]="isLoadingUsers"
+                    (ionChange)="onAssignedToChange($event)">
+                    <ion-select-option [value]="null">All</ion-select-option>
+                    <ion-select-option *ngFor="let u of users" [value]="u._id">
+                        {{ u.first_name }} {{ u.last_name }}
+                    </ion-select-option>
+                </ion-select>
+
                 <ion-input
                     class="min-w-0 flex-1 sm:min-w-[12rem]"
                     fill="outline"
@@ -34,48 +47,99 @@
                 </ion-input>
 
                 <div class="flex shrink-0 items-center justify-start gap-2 sm:justify-center">
-                    <ion-button (click)="loadTodos()" *ngIf="!searchQueryString" class="size-[56px]">
+                    <ion-button (click)="loadTodos()" *ngIf="!searchQueryString && !searchAssignedTo"
+                        class="size-[56px]">
                         <ion-icon name="refresh-sharp" [class.animate-spin]="isLoading"></ion-icon>
                     </ion-button>
-                    <ion-button (click)="clearSearch()" *ngIf="searchQueryString">
+                    <ion-button (click)="clearSearch()" *ngIf="searchQueryString || searchAssignedTo"
+                        class="size-[56px]">
                         <ion-icon name="close-circle-sharp"></ion-icon>
+                    </ion-button>
+                    <ion-button (click)="goToAdd()" class="h-[56px]">
+                        <ion-icon name="add-sharp" slot="start"></ion-icon>
+                        Add Todo
                     </ion-button>
                 </div>
             </div>
 
             <div class="w-full min-w-0 overflow-x-auto">
                 <ngx-datatable
-                    class="material"
+                    [scrollbarH]="true"
+                    [class]="ThemeService.isDarkPalette() ? 'dark' : 'material'"
                     columnMode="force"
-                    [rows]="todos"
+                    [rows]="displayedTodos"
                     [headerHeight]="50"
                     [footerHeight]="50"
                     rowHeight="auto"
                     [limit]="10">
-                    <ngx-datatable-column name="Title" prop="title" [minWidth]="150"></ngx-datatable-column>
-                    <ngx-datatable-column name="Description" [minWidth]="200">
+                    <ngx-datatable-column name="Title" prop="title" [minWidth]="100"
+                        [canAutoResize]="false"></ngx-datatable-column>
+                    <ngx-datatable-column name="Description" [minWidth]="200"
+                        [canAutoResize]="true">
                         <ng-template let-row="row" ngx-datatable-cell-template>
                             <span class="line-clamp-2">{{ row?.description ?? '' }}</span>
                         </ng-template>
                     </ngx-datatable-column>
-                    <ngx-datatable-column name="Status" prop="status" [minWidth]="120">
+                    <ngx-datatable-column
+                        name="Status"
+                        [width]="200"
+                        [canAutoResize]="false">
                         <ng-template let-row="row" ngx-datatable-cell-template>
-                            {{ (row?.status ?? '') | titlecase }}
+                            <app-todo-status-select
+                                [value]="row?.status"
+                                [disabled]="row?.status === 'deleted'"
+                                (statusChange)="updateTodoField(row, 'status', $event)">
+                            </app-todo-status-select>
                         </ng-template>
                     </ngx-datatable-column>
-                    <ngx-datatable-column name="Deadline" [minWidth]="130">
+                    <ngx-datatable-column
+                        name="Assigned To"
+                        [minWidth]="260">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                            <app-todo-assigned-to-select
+                                [value]="row?.assigned_to?._id ?? row?.assigned_to"
+                                [disabled]="row?.status === 'deleted'"
+                                (assignedToChange)="updateTodoField(row, 'assigned_to', $event)">
+                            </app-todo-assigned-to-select>
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column
+                        name="Deadline"
+                        [width]="160"
+                        [canAutoResize]="false">
                         <ng-template let-row="row" ngx-datatable-cell-template>
                             {{ (row?.deadline | date: 'mediumDate') ?? '' }}
                         </ng-template>
                     </ngx-datatable-column>
-                    <ngx-datatable-column name="Assigned To" [minWidth]="150">
-                        <ng-template let-row="row" ngx-datatable-cell-template>
-                            {{ row?.assigned_to ?? '' }}
+                    <ngx-datatable-column name="Created By" [width]="100" [canAutoResize]="false">
+                        <ng-template let-row="row" class="line-clamp-2" ngx-datatable-cell-template>
+                            <span class="line-clamp-2">
+                                {{ row?.created_by?.first_name ?? '' }} {{ row?.created_by?.last_name ?? '' }}
+                            </span>
                         </ng-template>
                     </ngx-datatable-column>
-                    <ngx-datatable-column name="Created By" [minWidth]="150">
+                    <ngx-datatable-column
+                        name="Actions"
+                        [sortable]="false"
+                        [width]="130"
+                        [canAutoResize]="false">
                         <ng-template let-row="row" ngx-datatable-cell-template>
-                            {{ row?.created_by ?? '' }}
+                            <div class="flex flex-row items-center justify-start gap-1">
+                                <ion-button
+                                    color="primary"
+                                    fill="clear"
+                                    (click)="goToEdit(row)"
+                                    *ngIf="row?.status !== 'deleted'">
+                                    <ion-icon name="create-sharp" slot="icon-only"></ion-icon>
+                                </ion-button>
+                                <ion-button
+                                    *ngIf="row?.status !== 'deleted'"
+                                    color="danger"
+                                    fill="clear"
+                                    (click)="onDeleteTodo(row)">
+                                    <ion-icon name="trash-sharp" slot="icon-only"></ion-icon>
+                                </ion-button>
+                            </div>
                         </ng-template>
                     </ngx-datatable-column>
                 </ngx-datatable>

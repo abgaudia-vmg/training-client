@@ -1,0 +1,75 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+            <ion-button (click)="goBack()">
+                <ion-icon name="arrow-back-sharp" slot="icon-only"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+        <ion-title>{{ isEditMode ? 'Edit Todo' : 'Add Todo' }}</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-content-center ion-padding">
+    <div class="w-full max-w-lg p-4 overflow-y-auto">
+        <form
+            [formGroup]="todoForm"
+            (ngSubmit)="submitForm()"
+            class="w-full flex flex-col gap-4">
+
+            <ion-input
+                formControlName="title"
+                label="Title"
+                labelPlacement="floating"
+                type="text"
+                fill="outline"
+                placeholder="Enter todo title">
+            </ion-input>
+
+            <ion-textarea
+                formControlName="description"
+                label="Description"
+                labelPlacement="floating"
+                fill="outline"
+                placeholder="Enter todo description"
+                [autoGrow]="true"
+                rows="3">
+            </ion-textarea>
+
+            <ion-input
+                formControlName="deadline"
+                label="Deadline"
+                labelPlacement="floating"
+                type="datetime-local"
+                fill="outline">
+            </ion-input>
+
+            <app-todo-status-select
+                formControlName="status">
+            </app-todo-status-select>
+
+            @if (isAdmin()) {
+                <app-todo-assigned-to-select
+                    formControlName="assigned_to">
+                </app-todo-assigned-to-select>
+            }
+
+            <div class="flex gap-4 justify-end ion-margin-top">
+                <ion-button
+                    fill="outline"
+                    (click)="goBack()"
+                    [disabled]="isLoading">
+                    Cancel
+                </ion-button>
+                <ion-button
+                    type="submit"
+                    [disabled]="todoForm.invalid || isLoading">
+                    <ion-icon name="refresh-sharp" slot="start" class="animate-spin" *ngIf="isLoading"></ion-icon>
+                    <ion-icon name="save-sharp" slot="start" *ngIf="!isLoading"></ion-icon>
+                    {{ isEditMode ? 'Update Todo' : 'Add Todo' }}
+                </ion-button>
+            </div>
+
+        </form>
+    </div>
+</ion-content>

@@ -31,6 +31,13 @@
 @import 'node_modules/@swimlane/ngx-datatable/assets/icons.css';
 @import 'node_modules/@swimlane/ngx-datatable/index.css';
 @import 'node_modules/@swimlane/ngx-datatable/themes/material.scss';
+@import 'node_modules/@swimlane/ngx-datatable/themes/dark.scss';
+
+.ngx-datatable .datatable-body-cell {
+  display: flex !important;
+  align-items: center !important;
+}
+
 /**
  * Ionic Dark Mode
  * -----------------------------------------------------
@@ -113,6 +120,17 @@ ion-button.ion-color-light:not([fill="outline"]):not([fill="clear"]) {
 
 ion-button.ion-color-dark:not([fill="outline"]):not([fill="clear"]) {
   @include soft-ion-color(dark);
+}
+
+ion-header {
+  box-shadow: none !important;
+  --box-shadow: none !important;
+
+  border-bottom: 1px solid var(--menu-border-color-light) !important;
+}
+
+:host-context(html.ion-palette-dark) ion-header {
+  border-bottom: 1px solid var(--menu-border-color-dark) !important;
 }
 
 /* No color prop: Ionic uses --background directly, not --ion-color-base */

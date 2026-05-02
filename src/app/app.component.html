@@ -34,7 +34,6 @@
 
                 <div class="ion-padding">
 
-
                     <ion-list lines="none" class="ion-padding">
                         <ion-menu-toggle auto-hide="false" *ngIf="sessionService.user()?.role === 'admin'">
                             <ion-item button routerLink="/user-management/view-all" routerLinkActive="selected"
@@ -84,7 +83,7 @@
             <ion-footer class="ion-padding flex flex-col gap-4 menu-footer">
                 <app-dark-mode-toggle></app-dark-mode-toggle>
                 <!-- <ion-button elevation="0" expand="full" class="app-menu-logout" (click)="logout()">Logout</ion-button> -->
-                <ion-button color="danger" (click)="logout()">
+                <ion-button color="danger" (click)="sessionService.logout()">
                     <ion-icon name="log-out-outline" slot="start"></ion-icon>
                     Logout
                 </ion-button>

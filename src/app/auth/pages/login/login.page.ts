@@ -49,7 +49,16 @@ export class LoginPage {
     //     // if(this.varForEmail) { this.loginForm.patchValue({ email: this.varForEmail }) }    
     // }
 
-    //ionViewWIllEnter > fetch every route to page — e2 dapat
+    ionViewWillEnter(): void {
+        console.log('ionViewWillEnter');
+        console.log(this.SessionService.isLoggedIn());
+
+        if (this.SessionService.user()?.role === 'admin') {
+            this.Router.navigate(['/user-management/view-all']);
+        } else {
+            this.Router.navigate(['/todos/my-todos']);
+        }
+    }
 
     public loginUser = () => {
         this.isLoading = true; //learning purposes: start loading spinner

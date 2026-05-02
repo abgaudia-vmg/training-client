@@ -12,7 +12,7 @@ export interface TodoFilterParams {
     providedIn: 'root',
 })
 export class TodoGatewayService {
-    constructor(private HttpClient: HttpClient) {}
+    constructor(private HttpClient: HttpClient) { }
 
     private buildSearchParams(params?: TodoFilterParams): string {
         const searchParams = new URLSearchParams();
@@ -37,6 +37,33 @@ export class TodoGatewayService {
     public getAllTodosPerUser = (userId: string, params?: TodoFilterParams) => {
         return this.HttpClient.get<{ success: boolean; data: ITodo[] }>(
             `${environment.api_url}/todo/all-per-user/${userId}${this.buildSearchParams(params)}`,
+        );
+    };
+
+
+    public getOne = (todoId: string) => {
+        return this.HttpClient.get<{ success: boolean; data: ITodo }>(
+            `${environment.api_url}/todo/${todoId}`,
+        );
+    };
+
+    public createTodo = (todo: ITodo) => {
+        return this.HttpClient.post<{ success: boolean; data: ITodo }>(
+            `${environment.api_url}/todo`,
+            todo,
+        );
+    };
+
+    public updateTodo = (todo: ITodo) => {
+        return this.HttpClient.put<{ success: boolean; data: ITodo }>(
+            `${environment.api_url}/todo/${todo._id}`,
+            todo,
+        );
+    };
+
+    public deleteTodo = (todoId: string) => {
+        return this.HttpClient.delete<{ success: boolean; data: ITodo }>(
+            `${environment.api_url}/todo/${todoId}`,
         );
     };
 }

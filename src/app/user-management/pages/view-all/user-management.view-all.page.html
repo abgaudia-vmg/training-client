@@ -9,17 +9,6 @@
 
 <ion-content [fullscreen]="true" class="ion-padding">
     <div class="mx-auto flex w-full min-w-0 max-w-7xl flex-col gap-4 pb-4">
-        <div
-            class="flex flex-col gap-3 min-[480px]:flex-row min-[480px]:flex-wrap min-[480px]:items-center min-[480px]:justify-between">
-            <ion-button [routerLink]="['/auth/login']" fill="outline" size="small" class="w-full min-[480px]:w-auto">
-                Go to Login
-            </ion-button>
-            <ion-button [routerLink]="['/user-management/add']" color="primary" class="w-full min-[480px]:w-auto">
-                <ion-icon name="person-add-sharp" slot="start"></ion-icon>
-                Add User
-            </ion-button>
-        </div>
-
         <div class="flex flex-col gap-4 min-w-0">
             <div
                 class="flex min-w-0 flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-center">
@@ -46,15 +35,20 @@
                     <ion-button (click)="loadUsers()" *ngIf="!searchQueryString" class="size-[56px]">
                         <ion-icon name="refresh-sharp" [class.animate-spin]="isLoading"></ion-icon>
                     </ion-button>
-                    <ion-button (click)="clearSearch()" *ngIf="searchQueryString">
+                    <ion-button (click)="clearSearch()" *ngIf="searchQueryString" class="size-[56px]">
                         <ion-icon name="close-circle-sharp"></ion-icon>
+                    </ion-button>
+                    <ion-button [routerLink]="['/user-management/add']" color="primary"
+                        class="w-full min-[480px]:w-auto h-[56px]">
+                        <ion-icon name="person-add-sharp" slot="start"></ion-icon>
+                        Add User
                     </ion-button>
                 </div>
             </div>
 
             <div class="w-full min-w-0 overflow-x-auto">
                 <ngx-datatable
-                    class="material"
+                    [class]="ThemeService.isDarkPalette() ? 'dark' : 'material'"
                     columnMode="force"
                     [rows]="users"
                     [headerHeight]="50"
@@ -67,9 +61,17 @@
                             {{ row?.first_name ?? '' }} {{ row?.last_name ?? '' }}
                         </ng-template>
                     </ngx-datatable-column>
-                    <ngx-datatable-column name="Username" prop="username" [minWidth]="100"></ngx-datatable-column>
-                    <ngx-datatable-column name="Email" prop="email" [minWidth]="200"></ngx-datatable-column>
-                    <ngx-datatable-column name="User Type" [minWidth]="160">
+                    <ngx-datatable-column name="Username" prop="username" [minWidth]="120">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                            <span class="line-clamp-2">{{ row?.username ?? '' }}</span>
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Email" prop="email" [minWidth]="200">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                            <span class="line-clamp-2">{{ row?.email ?? '' }}</span>
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="User Type" [width]="120" [canAutoResize]="false">
                         <ng-template let-row="row" ngx-datatable-cell-template>
                             <div class="flex flex-row items-center justify-start">
                                 <ion-select
@@ -100,7 +102,7 @@
                     <ngx-datatable-column
                         name="Actions"
                         [sortable]="false"
-                        [width]="100"
+                        [width]="130"
                         [canAutoResize]="false">
                         <ng-template let-row="row" ngx-datatable-cell-template>
                             <div class="flex flex-row items-center justify-start gap-1">

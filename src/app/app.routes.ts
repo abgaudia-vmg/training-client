@@ -16,11 +16,13 @@ export const routes: Routes = [
         path: 'tasks',
         loadComponent: () => import('./tasks/pages/pages.page').then(m => m.PagesPage)
     },
+
     {
         path: '',
         redirectTo: '/auth/login',
         pathMatch: 'full',
     },
+
 
     {
         path: 'auth/register/success',
@@ -89,6 +91,14 @@ export const routes: Routes = [
                 path: 'all-users',
                 canActivate: [AdminGuard],
                 loadComponent: () => import('./todos/pages/all-users/todos.all-users.page').then(m => m.TodosAllUsersPage)
+            },
+            {
+                path: 'add',
+                loadComponent: () => import('./todos/pages/todo-form/todo-form.page').then(m => m.TodoFormPage)
+            },
+            {
+                path: 'edit/:id',
+                loadComponent: () => import('./todos/pages/todo-form/todo-form.page').then(m => m.TodoFormPage)
             },
         ],
     },

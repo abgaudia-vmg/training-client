@@ -1,5 +1,5 @@
 import { CommonModule } from "@angular/common";
-import { Component, Signal, computed, signal } from '@angular/core';
+import { Component, OnInit, Signal, computed, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { IonicModule, AlertController } from '@ionic/angular';
 import { AppModule } from "./app.module";
@@ -21,7 +21,7 @@ import { AppSoftButtonComponent } from "./common/components/soft-button/soft-but
     imports: [CommonModule, IonicModule, AppModule, RouterLink, RouterLinkActive, DarkModeToggleComponent],
     standalone: true,
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
     public showSideMenu = false;
     private currentUrl!: Signal<string>;
     public firstLetterFirstName = computed(() => this.sessionService.user()?.first_name?.[0]?.toUpperCase?.() ?? '');
@@ -58,6 +58,11 @@ export class AppComponent {
         addIcons({ listOutline, peopleOutline, logOutOutline });
     }
 
+    ngOnInit(): void {
+        this.sessionService.listenForExternalChanges();
+        this.ThemeService.initializeThemeFromStorage();
+    }
+
     public onDarkModeToggle(event: CustomEvent<{ checked: boolean }>): void {
         const checked = event.detail?.checked ?? false;
         const theme: TTheme = checked ? 'dark' : 'light';
@@ -65,53 +70,53 @@ export class AppComponent {
     }
 
 
-    private clearAccessibleCookies(): void {
-        const expire = 'Thu, 01 Jan 1970 00:00:00 GMT';
-        const hostname = window.location.hostname;
-        const names =
-            document.cookie
-                ?.split(';')
-                .map((part) => part.split('=')[0]?.trim() ?? '')
-                .filter((name) => name.length > 0) ?? [];
-        for (const name of names) {
-            document.cookie = `${name}=;expires=${expire};path=/`;
-            document.cookie = `${name}=;expires=${expire};path=/;domain=${hostname}`;
-            document.cookie = `${name}=;expires=${expire};path=/;domain=.${hostname}`;
-        }
-    }
+    // private clearAccessibleCookies(): void {
+    //     const expire = 'Thu, 01 Jan 1970 00:00:00 GMT';
+    //     const hostname = window.location.hostname;
+    //     const names =
+    //         document.cookie
+    //             ?.split(';')
+    //             .map((part) => part.split('=')[0]?.trim() ?? '')
+    //             .filter((name) => name.length > 0) ?? [];
+    //     for (const name of names) {
+    //         document.cookie = `${name}=;expires=${expire};path=/`;
+    //         document.cookie = `${name}=;expires=${expire};path=/;domain=${hostname}`;
+    //         document.cookie = `${name}=;expires=${expire};path=/;domain=.${hostname}`;
+    //     }
+    // }
 
-    private finalizeLogout(): void {
-        this.clearAccessibleCookies();
-        this.sessionService.clearUser();
-        void this.Router.navigate(['/auth/login']);
-        this.CommonService.createToast({
-            message: 'Logout successful',
-            duration: 2,
-            color: 'success',
-        });
-    }
+    // private finalizeLogout(): void {
+    //     this.clearAccessibleCookies();
+    //     this.sessionService.clearUser();
+    //     void this.Router.navigate(['/auth/login']);
+    //     this.CommonService.createToast({
+    //         message: 'Logout successful',
+    //         duration: 2,
+    //         color: 'success',
+    //     });
+    // }
 
-    public logout(): void {
+    // public logout(): void {
 
 
-        this.AlertController.create({
-            header: 'Logout',
-            message: 'Are you sure you want to logout?',
-            buttons: [
-                { text: 'Cancel', role: 'cancel' },
-                {
-                    text: 'Logout', role: 'confirm',
-                    handler: () => {
-                        this.AuthGatewayService.logout({}).subscribe({
-                            next: () => this.finalizeLogout(),
-                            error: () => this.finalizeLogout(),
-                        });
-                    }
-                },
-            ],
-        }).then((alert) => {
-            alert.present();
-        });
-    }
+    //     this.AlertController.create({
+    //         header: 'Logout',
+    //         message: 'Are you sure you want to logout?',
+    //         buttons: [
+    //             { text: 'Cancel', role: 'cancel' },
+    //             {
+    //                 text: 'Logout', role: 'confirm',
+    //                 handler: () => {
+    //                     this.AuthGatewayService.logout({}).subscribe({
+    //                         next: () => this.finalizeLogout(),
+    //                         error: () => this.finalizeLogout(),
+    //                     });
+    //                 }
+    //             },
+    //         ],
+    //     }).then((alert) => {
+    //         alert.present();
+    //     });
+    // }
 
 }

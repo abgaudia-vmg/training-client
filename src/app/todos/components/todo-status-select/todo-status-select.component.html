@@ -1,0 +1,19 @@
+<ion-select
+    class="min-w-[120px]"
+    [value]="value"
+    [disabled]="disabled"
+    fill="outline"
+    interface="popover"
+    (ionChange)="onIonChange($event)">
+    @for (status of statusOptions; track status) {
+    <ion-select-option [value]="status">
+        <div class="flex items-center gap-2">
+            <ion-icon
+                [name]="getStatusIcon(status)"
+                [class]="getStatusColor(status)">
+            </ion-icon>
+            <span [class]="getStatusColor(status)">{{ status | titlecase }}</span>
+        </div>
+    </ion-select-option>
+    }
+</ion-select>
