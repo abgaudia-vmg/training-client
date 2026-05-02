@@ -5,7 +5,15 @@
 </ion-header> -->
 
 <ion-content [fullscreen]="true" class="ion-content-center">
-    <div class="w-full max-w-md p-4">
+    <div class="w-full max-w-md p-4 flex flex-col gap-8">
+
+        <!-- banner -->
+        <div class="flex items-center justify-center gap-2">
+            <ion-img src="assets/128.png" class="w-10 h-10"></ion-img>
+            <ion-text class="text-[32px] font-bold">Todo Management App</ion-text>
+        </div>
+        <div class="mx-[20%]" style="border-bottom: 1px solid var(--menu-border-color-light);"></div>
+
         <form
             [formGroup]="loginForm"
             (ngSubmit)="loginUser()"
