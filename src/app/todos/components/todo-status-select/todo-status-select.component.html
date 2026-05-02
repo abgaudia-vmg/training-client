@@ -3,7 +3,6 @@
     [value]="value"
     [disabled]="disabled"
     fill="outline"
-    interface="popover"
     (ionChange)="onIonChange($event)">
     @for (status of statusOptions; track status) {
     <ion-select-option [value]="status">

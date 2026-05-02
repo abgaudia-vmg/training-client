@@ -8,12 +8,20 @@
             slot="end"
             aria-label="Dark mode"
             [formControl]="darkModeControl"></ion-toggle>
-        <ion-icon
+        <!-- <ion-icon
             [name]="this.ThemeService.isDarkPalette() ? 'moon' : 'sunny'"
             [class.text-blue-500]="this.ThemeService.isDarkPalette()"
             [class.text-yellow-500]="!this.ThemeService.isDarkPalette()"
             [class.text-[28px]]="this.ThemeService.isDarkPalette()"
             [class.text-[32px]]="!this.ThemeService.isDarkPalette()"
-            aria-hidden="true"></ion-icon>
+            aria-hidden="true"></ion-icon> -->
+        <ion-text
+
+            [class.text-blue-500]="this.ThemeService.isDarkPalette()"
+            [class.text-yellow-500]="!this.ThemeService.isDarkPalette()"
+            [class.text-[28px]]="this.ThemeService.isDarkPalette()"
+            [class.text-[32px]]="!this.ThemeService.isDarkPalette()"
+            aria-hidden="true">
+            {{this.ThemeService.isDarkPalette() ? '🌙' : '☀️'}} </ion-text>
     </div>
 </div>

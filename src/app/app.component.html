@@ -2,12 +2,8 @@
     <ion-split-pane contentId="main-content">
         <ion-menu contentId="main-content" type="overlay" *ngIf="showAppMenu()">
             <ion-content>
-
-
                 <div class="menu-header ion-padding">
-
                     <div class="flex flex-row items-center gap-3">
-
                         <div class="flex items-center justify-center size-[44px] rounded-xl shrink-0"
                             style="background-color: var(--app-ion-btn-primary-fg);">
                             <span class="text-base font-semibold leading-none ion-text-uppercase"
@@ -27,13 +23,10 @@
                                 {{this.sessionService.user()?.role}}
                             </span>
                         </div>
-
                     </div>
-
                 </div>
 
                 <div class="ion-padding">
-
                     <ion-list lines="none" class="ion-padding">
                         <ion-menu-toggle auto-hide="false" *ngIf="sessionService.user()?.role === 'admin'">
                             <ion-item button routerLink="/user-management/view-all" routerLinkActive="selected"
@@ -77,8 +70,6 @@
                 </div>
 
             </ion-content>
-
-
 
             <ion-footer class="ion-padding flex flex-col gap-4 menu-footer">
                 <app-dark-mode-toggle></app-dark-mode-toggle>

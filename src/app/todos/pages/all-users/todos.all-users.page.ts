@@ -13,12 +13,13 @@ import { TodoFilterParams, TodoGatewayService } from '../../services/todo-gatewa
 import { TodoStatusSelectComponent } from '../../components/todo-status-select/todo-status-select.component';
 import { TodoAssignedToSelectComponent } from 'src/app/common/components/todo-assigned-to-select/todo-assigned-to-select.component';
 import { userGatewayService } from 'src/app/user-management/services/user-gateway.service';
+import { DashboardPageHeaderComponent } from "src/app/common/components/dashboard-page-header/dashboard-page-header.component";
 
 @Component({
     selector: 'app-todos-all-users',
     templateUrl: './todos.all-users.page.html',
     standalone: true,
-    imports: [AppModule, IonicModule, ReactiveFormsModule, NgxDatatableModule, TodoStatusSelectComponent, TodoAssignedToSelectComponent],
+    imports: [AppModule, IonicModule, ReactiveFormsModule, NgxDatatableModule, TodoStatusSelectComponent, TodoAssignedToSelectComponent, DashboardPageHeaderComponent],
 })
 export class TodosAllUsersPage implements ViewWillEnter {
     public todosForm: FormGroup;

@@ -1,33 +1,33 @@
 @if (isLoading) {
+<ion-select
+    [disabled]="true"
+    fill="outline"
+    placeholder="Loading users...">
+</ion-select>
+} @else if (hasError) {
+<div class="flex items-center gap-2">
     <ion-select
         [disabled]="true"
         fill="outline"
-        placeholder="Loading users...">
+        placeholder="Failed to load users">
     </ion-select>
-} @else if (hasError) {
-    <div class="flex items-center gap-2">
-        <ion-select
-            [disabled]="true"
-            fill="outline"
-            placeholder="Failed to load users">
-        </ion-select>
-        <ion-button fill="clear" size="small" (click)="retryLoad()">
-            <ion-icon name="refresh-sharp" slot="icon-only"></ion-icon>
-        </ion-button>
-    </div>
+    <ion-button fill="clear" size="small" (click)="retryLoad()">
+        <ion-icon name="refresh-sharp" slot="icon-only"></ion-icon>
+    </ion-button>
+</div>
 } @else {
-    <ion-select
-        [value]="value"
-        [disabled]="disabled"
-        fill="outline"
-        interface="popover"
-        placeholder="Unassigned"
-        (ionChange)="onIonChange($event)">
-        <ion-select-option [value]="null">Unassigned</ion-select-option>
-        @for (user of users; track user._id) {
-            <ion-select-option [value]="user._id">
-                {{ user.first_name }} {{ user.last_name }} ({{ user.username }})
-            </ion-select-option>
-        }
-    </ion-select>
+<ion-select
+    class="my-custom-popover"
+    [value]="value"
+    [disabled]="disabled"
+    fill="outline"
+    placeholder="Unassigned"
+    (ionChange)="onIonChange($event)">
+    <ion-select-option [value]="null">Unassigned</ion-select-option>
+    @for (user of users; track user._id) {
+    <ion-select-option [value]="user._id" class="my-custom-popover">
+        {{ user.first_name }} {{ user.last_name }} ({{ user.username }})
+    </ion-select-option>
+    }
+</ion-select>
 }

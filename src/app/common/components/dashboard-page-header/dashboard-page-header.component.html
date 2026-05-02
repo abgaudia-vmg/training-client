@@ -1,0 +1,18 @@
+<ion-header>
+    <ion-toolbar>
+        <div class="flex items-center justify-center gap-2">
+
+            <ion-buttons slot="start">
+                <ion-menu-button></ion-menu-button>
+            </ion-buttons>
+
+            <div class="flex items-center justify-center gap-2 flex-row"
+                [style.background-color]="ThemeService.isDarkPalette() ? 'var(--app-ion-btn-dark-bg)' : 'var(--app-ion-btn-light-bg)'">
+
+                <ion-img src="assets/128.png" class="w-8 h-8"></ion-img>
+                TMA
+            </div>
+            <ion-title style="padding-left: 0px;">{{title}}</ion-title>
+        </div>
+    </ion-toolbar>
+</ion-header>

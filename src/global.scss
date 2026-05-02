@@ -65,9 +65,15 @@
   .ion-content-center::part(scroll) {
     @apply flex min-h-full flex-col items-center justify-center;
   }
-
-
 }
+
+
+/* Select popover: allow options to wrap instead of truncating */
+.my-custom-popover {
+  white-space: normal !important;
+  overflow: visible !important;
+}
+
 
 /*
  * Softer solid ion-button fills (tokens: src/theme/variables.scss).

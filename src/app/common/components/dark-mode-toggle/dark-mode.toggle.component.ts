@@ -1,5 +1,5 @@
 import { Component, effect } from "@angular/core";
-import { ThemeService, TTheme } from "../services/theme.service";
+import { ThemeService, TTheme } from "../../services/theme.service";
 import { CommonModule } from "@angular/common";
 import { IonicModule } from "@ionic/angular";
 import { moon, sunny } from "ionicons/icons";

@@ -9,7 +9,7 @@ import { NavigationEnd, Router, RouterLink, RouterLinkActive } from "@angular/ro
 import { CommonService } from "./common/services/common.service";
 import { filter, map, startWith } from 'rxjs';
 import { ThemeService, TTheme } from "./common/services/theme.service";
-import { DarkModeToggleComponent } from "./common/components/dark-mode.toggle.component";
+import { DarkModeToggleComponent } from "./common/components/dark-mode-toggle/dark-mode.toggle.component";
 import { addIcons } from "ionicons";
 import { listOutline, logOutOutline, peopleOutline } from "ionicons/icons";
 import { AppSoftButtonComponent } from "./common/components/soft-button/soft-button.component";

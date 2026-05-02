@@ -3,7 +3,7 @@ import { Injectable, OnDestroy, signal } from "@angular/core";
 
 export const THEME_STORAGE_KEY = 'training-app-theme-preference';
 export const THEME_BROADCAST_CHANNEL_NAME = 'theme-sync';
-export const THEME_BROADCAST_CHANNEL_TYPE = 'theme-change';
+export const THEME_BROADCAST_CHANNEL_TYPE_THEME_CHANGE = 'theme-change';
 export type TTheme = "light" | "dark";
 
 @Injectable({ providedIn: 'root' })
@@ -41,7 +41,7 @@ export class ThemeService implements OnDestroy {
         this.applyDarkPalette(theme === 'dark');
         if (broadcast) {
             this.themeChannel.postMessage({
-                type: THEME_BROADCAST_CHANNEL_TYPE,
+                type: THEME_BROADCAST_CHANNEL_TYPE_THEME_CHANGE,
                 theme
             })
         }
@@ -49,7 +49,7 @@ export class ThemeService implements OnDestroy {
 
     private listenForExternalChanges(): void {
         this.themeChannel.onmessage = (event: MessageEvent<{ type: string, theme: TTheme }>) => {
-            if (event.data?.type === THEME_BROADCAST_CHANNEL_TYPE) {
+            if (event.data?.type === THEME_BROADCAST_CHANNEL_TYPE_THEME_CHANGE) {
                 this.setTheme(event.data.theme, false);
             }
         }
@@ -61,6 +61,4 @@ export class ThemeService implements OnDestroy {
         const themeToSet = theme ?? (prefersDark ? 'dark' : 'light');
         this.setTheme(themeToSet as TTheme);
     }
-
-
 }

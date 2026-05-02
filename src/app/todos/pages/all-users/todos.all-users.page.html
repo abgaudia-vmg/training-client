@@ -1,10 +1,11 @@
 <ion-header>
     <ion-toolbar>
-        <ion-buttons slot="start">
-            <ion-menu-button></ion-menu-button>
-        </ion-buttons>
-        <ion-img src="assets/128.png" class="w-8 h-8"></ion-img>
-        <ion-title>Todos | All Users</ion-title>
+        <div class="flex items-center justify-center gap-2">
+            <ion-buttons slot="start">
+                <ion-menu-button></ion-menu-button>
+            </ion-buttons>
+            <ion-title style="padding-left: 0px;">Todos | All Users</ion-title>
+        </div>
     </ion-toolbar>
 </ion-header>
 
@@ -83,8 +84,8 @@
                     </ngx-datatable-column>
                     <ngx-datatable-column
                         name="Status"
-                        [width]="200"
-                        [canAutoResize]="false">
+                        [maxWidth]="160"
+                        [canAutoResize]="true">
                         <ng-template let-row="row" ngx-datatable-cell-template>
                             <app-todo-status-select
                                 [value]="row?.status"
@@ -95,7 +96,8 @@
                     </ngx-datatable-column>
                     <ngx-datatable-column
                         name="Assigned To"
-                        [minWidth]="260">
+                        [minWidth]="240"
+                        [canAutoResize]="true">
                         <ng-template let-row="row" ngx-datatable-cell-template>
                             <app-todo-assigned-to-select
                                 [value]="row?.assigned_to?._id ?? row?.assigned_to"

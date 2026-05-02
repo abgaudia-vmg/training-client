@@ -24,7 +24,6 @@ export class SessionService implements OnDestroy {
     });
 
     ngOnDestroy(): void {
-        // this.user.set(null);
         this.sessionChannel.close();
     }
 
@@ -34,12 +33,9 @@ export class SessionService implements OnDestroy {
         private readonly Router: Router,
         private readonly CommonService: CommonService) { }
     public loadCurrentUser = (): Observable<CurrentUser> => {
-        // const epochAtSubscribe = this.sessionEpoch;
         return (this.AuthGatewayService.getLoggedInUserDetails() as Observable<any>).pipe(
             tap((user: any) => {
-                //@ts-ignore
                 this.user.set(user?.data ?? null);
-                this.normalizedRole.set(this.normalizeString(user?.data?.role ?? ''));
                 this.normalizedRole.set(this.normalizeString(user?.data?.role ?? ''));
             })
         );
@@ -50,7 +46,6 @@ export class SessionService implements OnDestroy {
     };
 
     public clearUser = (): void => {
-        // this.sessionEpoch += 1;
         this.user.set(null);
     };
 
@@ -128,6 +123,4 @@ export class SessionService implements OnDestroy {
             alert.present();
         });
     }
-
-
 }
